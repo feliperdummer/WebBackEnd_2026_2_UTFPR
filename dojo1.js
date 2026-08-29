@@ -28,11 +28,11 @@ const d4 = usuarios.reduce((max, u) => {
 }, [null, -1])
 
 // desafio 5
-console.log('"5" + 2:', "5" + 2) 
-console.log('"5" - 2:', "5" - 2)
-console.log('true + 1: ', true + 1)
-console.log('false == 0: ', false == 0)
-console.log('false === 0: ', false === 0)
+//console.log('"5" + 2:', "5" + 2) 
+//console.log('"5" - 2:', "5" - 2)
+//console.log('true + 1: ', true + 1)
+//console.log('false == 0: ', false == 0)
+//console.log('false === 0: ', false === 0)
 /**
  * Coerção de tipos em JS:
  * 
@@ -78,13 +78,13 @@ const p1 = {
         console.log(this.nome)
     }
 }
-p1.falar()
+//p1.falar()
 
 const p2 ={
     nome: 'Joao',
-    falar: () => console.log(this===module.exports)
+    falar: () => console.log(this.nome)
 }
-p2.falar()
+//p2.falar()
 /**
  * O que acontece ali em cima é que um objeto literal nao cria um contexto
  * novo para o this quando ele é declarado. O que eu quero dizer com isso é que
@@ -134,21 +134,17 @@ console.log(gerarRelatorio())
 
 // extra
 const extra = () => {
-    let maisNovo   =     null,
-        minIdade   = Infinity,
-        maisVelho  =     null,
-        maxIdade   =        0,
-        totalGasto =        0
+    let maisNovo   = null,
+        maisVelho  = null,
+        totalGasto =    0
     usuarios.forEach(u => {
-        if (u.idade < minIdade) {
-            maisNovo = u
-            minIdade = u.idade
-        }
-        if (u.idade > maxIdade) {
+        if (u.idade > (maisVelho?.idade || -1)) {
             maisVelho = u
-            maxIdade = u.idade
         }
-        totalGasto += u.compras.reduce((total, atual) => total+atual, 0)
+        if (u.idade < (maisNovo?.idade || Infinity)) {
+            maisNovo = u
+        }
+        totalGasto += u.compras.reduce((t, e) => t+e, 0)
     })
     return {
         maisNovo: maisNovo.nome,
